@@ -1,4 +1,4 @@
-# image Distis
+# digits-recognition
 This is the code for number(0-9) recognition in image by using SVM Classifier and HOG descripter. And the main algorithm was packed as classes in imgDistis.cpp 
 
 
