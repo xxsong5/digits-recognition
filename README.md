@@ -9,7 +9,8 @@ cmake ..
 make  
 
 
-## how to use example there need three steps for running this code. 
+## how to use example 
+there need three steps for running this code. 
 1.  save number image to a directory  and Format("img%05d_d.png") should be used as image name, the second 'd' in the format must be (0-9) asscociated with number's image or 11 for noise image.
 for example:  ./saveNUMImgs  .../images-path 
 Note. the zero should be named (0-9 ,11) asscociated with the image for training. ("img00001\_0.png-> img00001\_(0-9,11).png")
@@ -25,10 +26,10 @@ for example: ./detectNUMs  .../new-image  (.../number's-model.xml, can be ignore
 1.  ./saveNUMImgs ./character_0_1_2_3/  
 note. Press 's' key for saving numbers' images to (./trainData/) directory.
 
-2.  ./train ./trainData/
+2.  ./train ./trainData/ 
 note. Before run this commond, make sure you have changed The Zero in image name to associated number.
 
-3. ./detectNUMs  ./new-image  ./trainData/number_model.xml 
+3. ./detectNUMs  ./new-image  ./trainData/number_model.xml  
 note. The second param can be ignored if there is a number_model.xml file in trainData directory. For sample use: ./detectNUMs  ./new-image
 
 
