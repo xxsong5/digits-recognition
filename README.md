@@ -38,5 +38,5 @@ note. The second param can be ignored if there is a number_model.xml file in tra
 
 
 ## Notation
-By the way, this project just fit our purpose,  One must rewrite the segment(..) function your own project to generate segmented numbered images for trainnig.
+By the way, this project just fit our purpose,  One must rewrite the segment(..) function for your own project to generate segmented numbered images for trainnig.
 
