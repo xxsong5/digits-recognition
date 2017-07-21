@@ -36,6 +36,6 @@ note. The second param can be ignored if there is a number_model.xml file in tra
  there is a partial trained images model. For test, one can just run the third step (./detectNUMs  ./new-image).
 
 
-##Notation
+## Notation
 By the way, this project just fit our purpose,  One must rewrite the segment(..) function your own project to generate segmented numbered images for trainnig.
 
