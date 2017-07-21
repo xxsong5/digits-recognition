@@ -26,7 +26,7 @@ for example: ./detectNUMs  .../new-image  (.../number's-model.xml, can be ignore
 1.  ./saveNUMImgs ./character_0_1_2_3/  
 note. Press 's' key for saving numbers' images to (./trainData/) directory.
 
-2.  ./train ./trainData/ 
+2.  ./train ./trainData/  
 note. Before run this commond, make sure you have changed The Zero in image name to associated number.
 
 3. ./detectNUMs  ./new-image  ./trainData/number_model.xml  
