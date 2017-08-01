@@ -41,13 +41,13 @@ void ImgDitis::img2NUMS(const Mat& img, vector<int>& nums)
     vector<Mat> vnum_imgs;
     segmentNUM(img, vnum_imgs);
 
-   // //for debug
-   // if(vnum_imgs.size()==4){
-   //     cv::imshow("1", vnum_imgs[0]);
-   //     cv::imshow("2", vnum_imgs[1]);
-   //     cv::imshow("3", vnum_imgs[2]);
-   //     cv::imshow("4", vnum_imgs[3]);
-   // }
+    //for debug
+    if(vnum_imgs.size()==4){
+        cv::imshow("1", vnum_imgs[0]);
+        cv::imshow("2", vnum_imgs[1]);
+        cv::imshow("3", vnum_imgs[2]);
+        cv::imshow("4", vnum_imgs[3]);
+    }
 
     for(auto im: vnum_imgs){
         int tmp;
@@ -99,8 +99,10 @@ void segment(const cv::Mat& im, std::vector<cv::Mat>& vsubimgs)
     if(img.channels() ==3)cv::cvtColor(img, img, CV_BGR2GRAY);
     if(img.rows > img.cols){cv::transpose(img, img); cv::flip(img,img,0);}
 
+    cv::imshow("img1", img);
 
-    int width=9, counts_th=30;
+
+    int width=16, counts_th=90;
     vector<int> vlines;
     for(int j=width; j< img.cols; ++j){
         cv::Mat rect(img,cv::Rect(j-width,0,width, img.rows));
@@ -110,6 +112,7 @@ void segment(const cv::Mat& im, std::vector<cv::Mat>& vsubimgs)
             j+=2*width;
         }
     }
+
 
     // remove outlier of vlines
     for(size_t i=2; i< vlines.size();){
@@ -121,14 +124,16 @@ void segment(const cv::Mat& im, std::vector<cv::Mat>& vsubimgs)
         }
         ++i;
     }
-    if(vlines.size() < 5){ vlines.clear(); return; }
+
+
+    if(vlines.size() < 2){ vlines.clear(); return; }
     cv::Mat rect0(img, cv::Rect(vlines[0],0, vlines[1]-vlines[0], img.rows));
     cv::Mat rect1(img, cv::Rect(vlines[vlines.size()-2],0, vlines[vlines.size()-1]-vlines[vlines.size()-2], img.rows));
     if(cv::countNonZero(rect0) <counts_th) vlines.erase(vlines.begin());
     if(cv::countNonZero(rect1) <counts_th) vlines.erase(vlines.end()-1);
-    if(vlines.size() != 5){ vlines.clear(); return; }
+//    if(vlines.size() != 5){ vlines.clear(); return; }
     for(size_t i=1; i< vlines.size(); ++i){
-        cv::Mat rect0(img, cv::Rect(vlines[i-1],20, vlines[i]-vlines[i-1], img.rows-50));
+        cv::Mat rect0(img, cv::Rect(vlines[i-1],85, abs(vlines[i]-vlines[i-1]), img.rows-210));
         if(cv::countNonZero(rect0) < counts_th) continue;
         vsubimgs.push_back(rect0.clone());
     }
@@ -138,17 +143,18 @@ void segment(const cv::Mat& im, std::vector<cv::Mat>& vsubimgs)
         int win_width=vsubimgs[i].rows;
         int oriW=vsubimgs[i].cols;
         int leftW= win_width-oriW;
-        cv::copyMakeBorder(vsubimgs[i], vsubimgs[i], 0,0, leftW/2, leftW/2+ leftW%2,cv::BORDER_CONSTANT, cv::Scalar(0,0,0));
+        if(leftW>2)
+          cv::copyMakeBorder(vsubimgs[i], vsubimgs[i], 0,0, leftW/2, leftW/2+ leftW%2,cv::BORDER_CONSTANT, cv::Scalar(0,0,0));
         if(vsubimgs[i].cols != 80)
           cv::resize(vsubimgs[i], vsubimgs[i],cv::Size(80,80));
     }
 
-//    //for debug
-//    cout<<"       "<< vlines.size()<<endl;
-//    for(int i=0; i< vlines.size(); ++i){
-//        cv::line(img, cv::Point(vlines[i],0), cv::Point(vlines[i], img.rows-1),cv::Scalar(255,255,255),2);
-//    }
-//    cv::imshow("img", img);
+    //for debug
+   // cout<<"       "<< vlines.size()<<endl;
+    for(int i=0; i< vlines.size(); ++i){
+        cv::line(img, cv::Point(vlines[i],0), cv::Point(vlines[i], img.rows-1),cv::Scalar(255,255,255),2);
+    }
+    cv::imshow("img4", img);
 
 }
 
